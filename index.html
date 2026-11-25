@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zeeshaan, you've been summoned 💌</title>
+<meta name="description" content="An official summons to Trivia Night.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffe3ec; --bg2:#ffd0df; --card:#fffaf6; --ink:#4a1d3f; --soft:#8a5a7c;
+    --pink:#ff5c8a; --pink-d:#e23d6d; --plum:#6b2a5e; --gold:#ffc94d; --line:#f3c3d4;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:"Fredoka",system-ui,sans-serif;color:var(--ink);
+    background:radial-gradient(circle at 20% 10%,#fff0f5 0,transparent 40%),
+               radial-gradient(circle at 90% 90%,var(--bg2) 0,transparent 45%),var(--bg);
+    min-height:100dvh;overflow-x:hidden;
+  }
+  .floaty{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .floaty span{position:absolute;bottom:-40px;font-size:22px;opacity:.55;animation:rise linear infinite}
+  @keyframes rise{to{transform:translateY(-115vh) rotate(25deg)}}
+
+  .page{display:none;position:relative;z-index:1;min-height:100dvh;padding:28px 16px 40px;
+        flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .page.on{display:flex;animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+  @keyframes pop{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:none}}
+
+  .card{width:100%;max-width:420px;background:var(--card);border-radius:28px;padding:26px 22px 24px;
+        box-shadow:0 2px 0 var(--line),0 18px 40px -18px rgba(107,42,94,.45);border:2px solid var(--line)}
+  .stamp{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+         color:var(--pink-d);border:2px dashed var(--pink);border-radius:999px;padding:5px 12px;transform:rotate(-3deg);margin-bottom:14px}
+  h1{font-size:clamp(30px,9vw,40px);line-height:1.05;margin:6px 0 10px;color:var(--plum)}
+  h1 em{font-style:normal;color:var(--pink)}
+  p{font-size:17px;line-height:1.45;margin:8px 0;color:var(--soft)}
+  .big-emoji{font-size:58px;line-height:1;margin:4px 0 6px}
+  .sign{font-family:"Caveat",cursive;font-size:28px;color:var(--pink-d);margin-top:14px}
+
+  .btns{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:22px;flex-wrap:wrap;min-height:70px}
+  button{font:inherit;border:0;cursor:pointer;border-radius:999px;font-weight:700;transition:transform .15s,box-shadow .15s}
+  button:active{transform:scale(.95)}
+  .yes{background:var(--pink);color:#fff;padding:16px 30px;font-size:20px;box-shadow:0 5px 0 var(--pink-d)}
+  .no{background:#efe3ea;color:var(--soft);padding:12px 22px;font-size:16px;box-shadow:0 4px 0 #d9c5d1}
+  .primary{width:100%;background:var(--plum);color:#fff;padding:17px;font-size:19px;box-shadow:0 5px 0 #4a1d3f;margin-top:18px}
+  .primary:disabled{opacity:.4;box-shadow:none}
+  .ghost{background:none;color:var(--soft);text-decoration:underline;font-weight:600;margin-top:12px;padding:8px}
+
+  .photo{width:100%;max-width:420px;border-radius:24px;overflow:hidden;border:4px solid #fff;
+         box-shadow:0 18px 40px -16px rgba(74,29,63,.55);transform:rotate(-1.5deg);margin:14px 0 6px}
+  .photo img{display:block;width:100%;height:auto;max-height:58dvh;object-fit:cover}
+  .caption{font-family:"Caveat",cursive;font-size:30px;color:var(--plum);margin:10px 0 0}
+  .sad-banner{background:var(--plum);color:#fff;border-radius:16px;padding:10px 16px;font-weight:700;font-size:18px;transform:rotate(1.5deg)}
+  .points{display:inline-block;background:var(--gold);color:var(--ink);font-weight:700;border-radius:999px;padding:8px 16px;font-size:18px;transform:rotate(2deg);box-shadow:0 4px 0 #e0a92a}
+
+  .day{font-weight:700;color:var(--plum);text-align:left;margin:18px 2px 8px;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+  .slot{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);
+        border-radius:18px;padding:14px 16px;margin-bottom:10px;font-size:18px;color:var(--ink);font-weight:600;box-shadow:none}
+  .slot .dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:14px}
+  .slot small{display:block;font-weight:400;color:var(--soft);font-size:14px}
+  .slot.sel{border-color:var(--pink);background:#fff0f5}
+  .slot.sel .dot{background:var(--pink);border-color:var(--pink);color:#fff}
+  textarea{width:100%;font:inherit;font-size:16px;border:2px solid var(--line);border-radius:16px;padding:12px 14px;resize:none;
+           color:var(--ink);background:#fff;margin-top:6px}
+  textarea:focus{outline:none;border-color:var(--pink)}
+  label.lbl{display:block;text-align:left;font-weight:600;color:var(--plum);margin-top:18px}
+
+  .ticket{background:#fff0f5;border:2px dashed var(--pink);border-radius:18px;padding:16px;margin:16px 0 4px}
+  .ticket b{display:block;font-size:22px;color:var(--plum)}
+  .status{font-size:15px;min-height:22px;margin-top:10px}
+  .confetti{position:fixed;top:-20px;font-size:24px;z-index:5;pointer-events:none;animation:fall 2.4s ease-in forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2}}
+  @media (prefers-reduced-motion:reduce){.floaty,.confetti{display:none}.page.on{animation:none}}
+</style>
+</head>
+<body>
+<div class="floaty" id="floaty" aria-hidden="true"></div>
+
+<!-- 1 · THE SUMMONS -->
+<section class="page on" id="p-invite">
+  <div class="card">
+    <div class="stamp">Official summons · long-distance edition</div>
+    <div class="big-emoji">🧠💌</div>
+    <h1><span class="nm">Zeeshaan</span>, you've been challenged to <em>Trivia Night</em></h1>
+    <p>One video call. One very smart girlfriend. One boyfriend about to lose (lovingly).</p>
+    <p>Do you accept?</p>
+    <div class="btns">
+      <button class="yes" id="yesBtn">YES 💖</button>
+      <button class="no" id="noBtn">no</button>
+    </div>
+    <div class="sign">— stinky winky</div>
+  </div>
+</section>
+
+<!-- 1b · WRONG ANSWER -->
+<section class="page" id="p-sad">
+  <div class="sad-banner" id="sadLine">Wrong answer. Look what you did.</div>
+  <div class="photo"><img src="img/sad.jpg" alt="Zeeshaan, devastated"></div>
+  <p class="caption" id="sadCap">this is you without trivia night 🥺</p>
+  <button class="yes" id="tryAgain" style="margin-top:12px">ok ok, let me try again</button>
+</section>
+
+<!-- 2 · CORRECT -->
+<section class="page" id="p-happy">
+  <div class="points">✅ Correct answer! +10 points</div>
+  <div class="photo" style="transform:rotate(1.5deg)"><img src="img/happy.jpg" alt="Zeeshaan, delighted"></div>
+  <p class="caption">look how happy you are already 🥰</p>
+  <div style="width:100%;max-width:420px">
+    <button class="primary" id="toSlots">Now pick when →</button>
+  </div>
+</section>
+
+<!-- 3 · PICK A SLOT -->
+<section class="page" id="p-slots">
+  <div class="card">
+    <div class="stamp">Step 2 of 2</div>
+    <h1 style="font-size:30px">When are you getting <em>destroyed</em>?</h1>
+    <p>Pick one slot. Choose wisely.</p>
+    <div id="slotList"></div>
+    <label class="lbl" for="talk">Any trash talk? (optional)</label>
+    <textarea id="talk" rows="2" placeholder="e.g. I will win and you will cry"></textarea>
+    <button class="primary" id="lockIn" disabled>Lock it in 🔒</button>
+  </div>
+</section>
+
+<!-- 4 · DONE -->
+<section class="page" id="p-done">
+  <div class="card">
+    <div class="big-emoji">🏆</div>
+    <h1 style="font-size:32px">It's a <em>date</em>.</h1>
+    <div class="ticket">
+      <span style="color:var(--soft);font-size:14px;text-transform:uppercase;letter-spacing:.1em">Trivia Night</span>
+      <b id="ticketTime"></b>
+      <span style="color:var(--soft)">Pyjamas encouraged · snacks mandatory · no Googling</span>
+    </div>
+    <p><b>House rules:</b> loser owes the winner three compliments. Sulking is not allowed. Winner gets a virtual kiss (loser too, I'm nice).</p>
+    <button class="primary" id="sendBtn">Send my answer to Stinky Winky 💌</button>
+    <div class="status" id="status"></div>
+    <button class="ghost" id="changeBtn">wait, change my slot</button>
+    <div class="sign">see you there, loser ♡<br>— stinky winky</div>
+  </div>
+</section>
+
+<script>
+/* ============ CONFIG ============ */
+const NAME = "Zeeshaan";
+const FROM = "Stinky Winky";
+// Optional: paste a Formspree link (https://formspree.io/f/xxxx) to get his answer by email automatically.
+const FORMSPREE = "";
+// Optional: your phone number with country code, digits only (e.g. "393401234567") so WhatsApp opens straight to your chat.
+const WHATSAPP = "";
+const SLOTS = [
+  { day: "Today · Wed 25 Nov", items: ["19:00 – 20:00", "20:00 – 21:00"] },
+  { day: "Tomorrow · Thu 26 Nov", items: ["10:00 – 11:00", "11:00 – 12:00", "13:00 – 14:00"] },
+];
+/* ================================ */
+
+const $ = id => document.getElementById(id);
+function show(id){
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("on", p.id === id));
+  window.scrollTo(0, 0);
+}
+
+// floating hearts
+(() => {
+  const f = $("floaty"), e = ["💖","💕","🧠","⭐","💌","❓"];
+  for (let i = 0; i < 14; i++) {
+    const s = document.createElement("span");
+    s.textContent = e[i % e.length];
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.animationDuration = 9 + Math.random() * 10 + "s";
+    s.style.animationDelay = -Math.random() * 18 + "s";
+    f.appendChild(s);
+  }
+})();
+
+function confetti(){
+  const e = ["💖","🎉","⭐","💕","🧠"];
+  for (let i = 0; i < 28; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.textContent = e[i % e.length];
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDelay = Math.random() * .6 + "s";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3200);
+  }
+}
+
+// ---- page 1: yes / no ----
+let noCount = 0, yesScale = 1;
+const sadLines = [
+  ["Wrong answer. Look what you did.", "this is you without trivia night 🥺"],
+  ["Still wrong. He's getting sadder.", "Zeeshaan pls 😭"],
+  ["Wow. Again?", "stinky winky is crying now too"],
+  ["The 'no' button is broken anyway.", "there is only one correct answer, baby"],
+];
+$("noBtn").onclick = () => {
+  const [line, cap] = sadLines[Math.min(noCount, sadLines.length - 1)];
+  $("sadLine").textContent = line;
+  $("sadCap").textContent = cap;
+  noCount++;
+  yesScale = Math.min(1 + noCount * 0.18, 1.8);
+  show("p-sad");
+};
+$("tryAgain").onclick = () => {
+  $("yesBtn").style.transform = `scale(${yesScale})`;
+  const no = $("noBtn");
+  no.style.transform = `scale(${Math.max(1 - noCount * 0.2, 0.4)})`;
+  if (noCount >= 3) no.textContent = "no (pls don't)";
+  show("p-invite");
+};
+$("yesBtn").onclick = () => { confetti(); show("p-happy"); };
+$("toSlots").onclick = () => show("p-slots");
+
+// ---- page 3: slots ----
+let chosen = null;
+const list = $("slotList");
+SLOTS.forEach(g => {
+  const h = document.createElement("div");
+  h.className = "day"; h.textContent = g.day; list.appendChild(h);
+  g.items.forEach(t => {
+    const b = document.createElement("button");
+    b.className = "slot"; b.type = "button";
+    b.innerHTML = `<span class="dot"></span><span>${t}</span>`;
+    b.onclick = () => {
+      list.querySelectorAll(".slot").forEach(x => { x.classList.remove("sel"); x.querySelector(".dot").textContent = ""; });
+      b.classList.add("sel"); b.querySelector(".dot").textContent = "✓";
+      chosen = `${g.day}, ${t}`;
+      $("lockIn").disabled = false;
+    };
+    list.appendChild(b);
+  });
+});
+
+function message(){
+  const talk = $("talk").value.trim();
+  return `💌 Trivia Night RSVP from ${NAME}\n` +
+         `Answer: YES (said no ${noCount} time${noCount === 1 ? "" : "s"} first 👀)\n` +
+         `Slot: ${chosen}` + (talk ? `\nTrash talk: "${talk}"` : "");
+}
+
+$("lockIn").onclick = () => {
+  $("ticketTime").textContent = chosen;
+  $("status").textContent = "";
+  confetti();
+  show("p-done");
+  if (FORMSPREE) {
+    fetch(FORMSPREE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ name: NAME, slot: chosen, trash_talk: $("talk").value.trim(), times_said_no: noCount, _subject: `Trivia Night: ${NAME} picked ${chosen}` })
+    }).catch(() => {});
+  }
+};
+
+$("sendBtn").onclick = async () => {
+  const text = message();
+  if (navigator.share) {
+    try { await navigator.share({ text }); $("status").textContent = "Sent! Now go study 📚"; return; }
+    catch (e) { if (e.name === "AbortError") return; }
+  }
+  const url = WHATSAPP ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`
+                       : `https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, "_blank");
+};
+$("changeBtn").onclick = () => show("p-slots");
+</script>
+</body>
+</html>
