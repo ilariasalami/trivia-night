@@ -85,7 +85,7 @@
     <div class="stamp">Official summons · long-distance edition</div>
     <div class="big-emoji">🧠💌</div>
     <h1><span class="nm">Zeeshaan</span>, you've been challenged to <em>Trivia Night</em></h1>
-    <p>One video call. One very smart girlfriend. One boyfriend about to lose (lovingly).</p>
+    <p>One video call. One girlfriend who knows something, one boyfriend wo is ready to destroy me.</p>
     <p>Do you accept?</p>
     <div class="btns">
       <button class="yes" id="yesBtn">YES 💖</button>
@@ -121,7 +121,7 @@
     <p>Pick one slot. Choose wisely.</p>
     <div id="slotList"></div>
     <label class="lbl" for="talk">Any trash talk? (optional)</label>
-    <textarea id="talk" rows="2" placeholder="e.g. I will win and you will cry"></textarea>
+    <textarea id="talk" rows="2" placeholder="e.g. what what what whattt"></textarea>
     <button class="primary" id="lockIn" disabled>Lock it in 🔒</button>
   </div>
 </section>
@@ -136,11 +136,11 @@
       <b id="ticketTime"></b>
       <span style="color:var(--soft)">Pyjamas encouraged · snacks mandatory · no Googling</span>
     </div>
-    <p><b>House rules:</b> loser owes the winner three compliments. Sulking is not allowed. Winner gets a virtual kiss (loser too, I'm nice).</p>
+    <p><b>House rules:</b>  Winner gets a virtual kiss (loser too, I'm nice I love you).</p>
     <button class="primary" id="sendBtn">Send my answer to Stinky Winky 💌</button>
     <div class="status" id="status"></div>
     <button class="ghost" id="changeBtn">wait, change my slot</button>
-    <div class="sign">see you there, loser ♡<br>— stinky winky</div>
+    <div class="sign">see you there ♡<br>— your stinky winky</div>
   </div>
 </section>
 
@@ -260,7 +260,7 @@ $("lockIn").onclick = () => {
 $("sendBtn").onclick = async () => {
   const text = message();
   if (navigator.share) {
-    try { await navigator.share({ text }); $("status").textContent = "Sent! Now go study 📚"; return; }
+    try { await navigator.share({ text }); $("status").textContent = "Sent! I love you my baby"; return; }
     catch (e) { if (e.name === "AbortError") return; }
   }
   const url = WHATSAPP ? `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`
